@@ -1,0 +1,205 @@
+Desenvolver um portfólio front-end completo, inovador e imersivo, utilizando React + TypeScript + Tailwind CSS, com UX/UI de altíssimo nível, Dark Mode, animações cósmicas e funcionalidades avançadas.
+O portfólio deve ser robusto, modular e profissional, surpreendendo qualquer recrutador.
+
+2️⃣ Paleta de Cores
+
+Preto profundo (primário): #000000
+
+Roxo clássico: #6B4CFF
+
+Roxo vívido (destaque): #9B30FF
+
+Branco: #FFFFFF
+
+Cinza claro: #E0E0E0
+
+Azul espacial: #3AB0FF
+
+3️⃣ Tecnologias e Bibliotecas
+
+React + TypeScript
+
+Tailwind CSS
+
+Framer Motion / React Spring – animações avançadas
+
+Three.js / react-three-fiber – planetas, estrelas, nebulosas 3D
+
+Particles.js / tsparticles – partículas interativas
+
+Parallax.js / Rellax.js – parallax multi-camadas
+
+Monaco Editor / Sandpack – IDE estilo VS Code
+
+xterm.js – terminal interativo
+
+Axios / Fetch API – YouTube e outras APIs
+
+Zustand / React Context – estado global
+
+4️⃣ Estrutura de Pastas
+src/
+├─ components/
+│   ├─ Header.tsx
+│   ├─ Footer.tsx
+│   ├─ DarkModeToggle.tsx
+│   ├─ ProjectCard.tsx
+│   ├─ ProjectModal.tsx
+│   ├─ VideoCard.tsx
+│   ├─ VideoPlayer.tsx
+│   ├─ IDE.tsx
+│   ├─ Sidebar.tsx
+│   ├─ Editor.tsx
+│   ├─ Terminal.tsx
+│   ├─ LivePreview.tsx
+│   ├─ WhatsAppButton.tsx
+│   ├─ ResumeButton.tsx
+│   ├─ ContactForm.tsx
+│   ├─ Dialog.tsx
+│   ├─ PopUp.tsx
+├─ pages/
+│   ├─ Home.tsx
+│   ├─ About.tsx
+│   ├─ Projects.tsx
+│   ├─ Videos.tsx
+│   ├─ IDEPage.tsx
+│   ├─ Contact.tsx
+├─ hooks/
+│   ├─ useDarkMode.ts
+│   ├─ useYouTubeSearch.ts
+│   ├─ useIDEStore.ts
+├─ utils/
+│   ├─ api.ts
+│   ├─ animations.ts
+├─ assets/
+│   ├─ images/
+│   ├─ videos/
+├─ types/
+│   ├─ index.ts
+├─ App.tsx
+├─ main.tsx
+├─ index.css
+
+5️⃣ Componentes e Funcionalidades
+Navbar / Header
+
+Links: Home, About, Projects, Videos, IDE, Contact
+
+Botão Currículo
+
+Dark Mode toggle animado
+
+Glow e partículas sutis de fundo
+
+Sticky com animações fade + slide + partículas
+
+Footer
+
+Links sociais
+
+Fundo com estrelas e planetas
+
+ProjectCard
+
+Card 3D interativo
+
+Hover: glow roxo + partículas orbitando
+
+Clique → abre ProjectModal
+
+ProjectModal
+
+Vídeo/GIF do projeto
+
+Descrição completa e tecnologias usadas
+
+Botões: GitHub e Live Demo
+
+Animação fade + scale + partículas
+
+VideoCard + VideoPlayer
+
+Pesquisa em tempo real via YouTube API
+
+Hover: zoom, glow e partículas
+
+Player em Lightbox/modal com Dark Mode
+
+Transições TV glitch + fade
+
+IDE Funcional
+
+Editor Monaco completo: multi-abas, syntax highlight, autocomplete, linting, mini-map
+
+Terminal interativo com xterm.js
+
+Live preview de HTML/CSS/JS/TS
+
+Gerenciamento de arquivos: criar, renomear, excluir, drag & drop
+
+Notificações e pop-ups de erros ou sucesso
+
+Dark Mode e temas VS Code
+
+Gamificação opcional: badges e partículas de feedback
+
+WhatsAppButton + ResumeButton
+
+Botões flutuantes com glow e partículas orbitando
+
+Tooltip animado
+
+Pop-ups de confirmação
+
+ContactForm
+
+Inputs com glow e partículas ao foco
+
+Botão enviar com hover glow + partículas
+
+Feedback com pop-ups de sucesso/erro
+
+Fundo parallax cósmico
+
+Dialog / PopUp
+
+Componente genérico para alertas, confirmações, erros
+
+Animações fade, slide e scale
+
+Chamável por qualquer botão ou formulário
+
+6️⃣ Páginas
+
+Home: Fundo parallax cósmico com estrelas, planetas, nebulosas; TV glitch em títulos; texto flutuante com glow; CTA animado.
+
+About: Avatar com partículas orbitando; timeline animada de habilidades; modais de conquistas.
+
+Projects: Cinco cards 3D interativos com glow e partículas; modais; linha do tempo conectando projetos.
+
+Videos: Pesquisa YouTube em tempo real; grid de vídeos com hover glow; player Lightbox; Dark Mode; parallax cósmico de fundo.
+
+IDE: Editor Monaco, terminal xterm.js, live preview, multi-abas, gerenciamento de arquivos, gamificação opcional, fundo parallax com planetas e partículas.
+
+Contact: Formulário animado, inputs glow, fundo parallax cósmico, pop-ups de feedback.
+
+7️⃣ Animações e Experiência
+
+Parallax cósmico extremo: estrelas, planetas, nebulosas
+
+Partículas interativas e orbitais
+
+TV glitch, fade, slide, zoom, fly-through space
+
+Glow, gradientes, microinterações hover/click/focus/drag
+
+Dark Mode toggle animado
+
+Gamificação opcional IDE e projetos
+
+Performance otimizada e responsividade total
+
+UX/UI inovador, extremo e nunca visto em portfólio front-end
+
+💡 Instrução Final para AI / Replit:
+“Crie um portfólio front-end completo em React + TypeScript + Tailwind CSS, ultra avançado, com Home, About, Projects, Videos, IDE, Contact, cinco projetos interativos com modais, IDE estilo VS Code funcional com editor Monaco, terminal xterm.js, live preview, multi-abas e gerenciamento de arquivos, aba de vídeos integrada ao YouTube em tempo real, Dark Mode, botões flutuantes de WhatsApp e Currículo, navbar com botão Currículo, parallax cósmico, partículas, glow, TV glitch, fly-through space, microinterações, seguindo a paleta de cores definida (preto, roxo, roxo vívido, branco, cinza claro, azul espacial). Garanta UX/UI extremo, funcionalidades inéditas e design jamais visto em portfólio front-end.”
