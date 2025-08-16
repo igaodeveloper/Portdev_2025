@@ -15,10 +15,10 @@ export const Home = () => {
               className="inline-block"
               {...glitchEffect}
             >
-              COSMIC
+              DESENVOLVEDOR
             </motion.span>
             <br />
-            <span className="text-cosmic-blue">DEVELOPER</span>
+            <span className="text-cosmic-blue">FULLSTACK</span>
           </motion.h1>
           
           <motion.p
@@ -26,8 +26,8 @@ export const Home = () => {
             {...fadeInUp}
             transition={{ delay: 0.2 }}
           >
-            Building the future of web development with cutting-edge technologies, 
-            cosmic creativity, and infinite possibilities.
+            Construindo o futuro do desenvolvimento web com tecnologias de ponta,
+            criatividade cósmica e infinitas possibilidades.
           </motion.p>
           
           <motion.div
@@ -42,7 +42,7 @@ export const Home = () => {
                 whileTap={{ scale: 0.95 }}
                 data-testid="link-explore-universe"
               >
-                Explore Universe
+                Explorar Universo
               </motion.a>
             </Link>
             <Link href="/projects">
@@ -52,7 +52,7 @@ export const Home = () => {
                 whileTap={{ scale: 0.95 }}
                 data-testid="link-view-projects"
               >
-                View Projects
+                Ver Projetos
               </motion.a>
             </Link>
           </motion.div>

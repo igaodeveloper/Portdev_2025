@@ -8,12 +8,12 @@ export const Header = () => {
   const [location] = useLocation();
 
   const navItems = [
-    { href: '/', label: 'Home' },
-    { href: '/about', label: 'About' },
-    { href: '/projects', label: 'Projects' },
-    { href: '/videos', label: 'Videos' },
+    { href: '/', label: 'Início' },
+    { href: '/about', label: 'Sobre' },
+    { href: '/projects', label: 'Projetos' },
+    { href: '/videos', label: 'Vídeos' },
     { href: '/ide', label: 'IDE' },
-    { href: '/contact', label: 'Contact' },
+    { href: '/contact', label: 'Contato' },
   ];
 
   return (
@@ -24,8 +24,8 @@ export const Header = () => {
       <nav className="container mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
           <Link href="/" className="text-2xl font-bold text-glow cursor-pointer">
-            <span className="text-cosmic-purple">Cosmic</span>
-            <span className="text-cosmic-blue">Dev</span>
+            <span className="text-cosmic-purple">Igão</span>
+            <span className="text-cosmic-blue">.tsx</span>
           </Link>
           
           <div className="hidden md:flex space-x-8">

@@ -5,20 +5,20 @@ import { fadeInUp, fadeInLeft, fadeInRight } from '../utils/animations';
 const contactMethods = [
   {
     icon: 'fas fa-envelope',
-    title: 'Email',
-    value: 'cosmic.dev@universe.com',
+    title: 'E-mail',
+    value: 'contato@portdev.com.br',
     color: 'from-cosmic-purple to-cosmic-blue',
   },
   {
     icon: 'fab fa-linkedin',
     title: 'LinkedIn',
-    value: 'linkedin.com/in/cosmicdev',
+    value: 'linkedin.com/in/seu-perfil',
     color: 'from-cosmic-purple to-cosmic-blue',
   },
   {
     icon: 'fab fa-github',
     title: 'GitHub',
-    value: 'github.com/cosmicdev',
+    value: 'github.com/seu-usuario',
     color: 'from-cosmic-purple to-cosmic-blue',
   },
 ];
@@ -31,17 +31,17 @@ export const Contact = () => {
           className="text-5xl font-bold text-center mb-16 text-glow"
           {...fadeInUp}
         >
-          Contact <span className="text-cosmic-purple">Me</span>
+          Fale <span className="text-cosmic-purple">Comigo</span>
         </motion.h2>
         
         <div className="max-w-4xl mx-auto grid lg:grid-cols-2 gap-12">
           <motion.div {...fadeInLeft}>
             <h3 className="text-3xl font-bold mb-6 text-cosmic-blue">
-              Let's Build Something Cosmic
+              Vamos Construir Algo Incrível
             </h3>
             <p className="text-lg text-cosmic-gray mb-8">
-              Ready to embark on a development journey that transcends the ordinary? 
-              Let's create something extraordinary together.
+              Pronto para embarcar em uma jornada de desenvolvimento que transcende o comum?
+              Vamos criar algo extraordinário juntos.
             </p>
             
             <div className="space-y-6">

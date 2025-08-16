@@ -4,7 +4,7 @@ import { fadeInUp, fadeInLeft, fadeInRight, cosmicRotate } from '../utils/animat
 const skills = [
   { name: 'React & TypeScript', percentage: 95, category: 'Frontend' },
   { name: 'Node.js & Python', percentage: 90, category: 'Backend' },
-  { name: 'Three.js & WebGL', percentage: 85, category: '3D Graphics' },
+  { name: 'Three.js & WebGL', percentage: 85, category: 'Gráficos 3D' },
 ];
 
 export const About = () => {
@@ -15,7 +15,7 @@ export const About = () => {
           className="text-5xl font-bold text-center mb-16 text-glow"
           {...fadeInUp}
         >
-          About <span className="text-cosmic-purple">Me</span>
+          Sobre <span className="text-cosmic-purple">Mim</span>
         </motion.h2>
         
         <div className="grid lg:grid-cols-2 gap-12 items-center">
@@ -23,9 +23,9 @@ export const About = () => {
             className="relative"
             {...fadeInLeft}
           >
-            {/* Cosmic avatar with orbiting particles */}
+            {/* Avatar cósmico com partículas orbitais */}
             <div className="relative w-80 h-80 mx-auto">
-              {/* Avatar placeholder with cosmic glow */}
+              {/* Espaço reservado para avatar com brilho cósmico */}
               <motion.div
                 className="w-full h-full rounded-full bg-gradient-to-br from-cosmic-purple to-cosmic-purple-vivid flex items-center justify-center text-8xl"
                 animate={{
@@ -44,7 +44,7 @@ export const About = () => {
                 <i className="fas fa-user-astronaut text-white"></i>
               </motion.div>
               
-              {/* Orbiting particles */}
+              {/* Partículas orbitais */}
               <motion.div 
                 className="absolute inset-0"
                 {...cosmicRotate}
@@ -61,16 +61,16 @@ export const About = () => {
             className="space-y-6"
             {...fadeInRight}
           >
-            <h3 className="text-3xl font-bold text-cosmic-blue">Full-Stack Cosmic Engineer</h3>
+            <h3 className="text-3xl font-bold text-cosmic-blue">Desenvolvedor Full-Stack</h3>
             <p className="text-lg text-cosmic-gray leading-relaxed">
-              Passionate developer with 5+ years of experience creating immersive digital experiences. 
-              Specialized in React, TypeScript, and cutting-edge web technologies that push the boundaries 
-              of what's possible on the web.
+              Desenvolvedor apaixonado com mais de 5 anos de experiência criando experiências digitais imersivas. 
+              Especializado em React, TypeScript e tecnologias web de ponta que expandem os limites 
+              do que é possível na web.
             </p>
             
             {/* Skills Timeline */}
             <div className="space-y-4">
-              <h4 className="text-xl font-semibold text-cosmic-purple">Core Technologies</h4>
+              <h4 className="text-xl font-semibold text-cosmic-purple">Tecnologias Principais</h4>
               
               {skills.map((skill, index) => (
                 <motion.div
