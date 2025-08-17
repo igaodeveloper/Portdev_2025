@@ -5,6 +5,7 @@ export const Footer = () => {
   const socialLinks = [
     { icon: 'fab fa-github', url: 'https://github.com', label: 'GitHub' },
     { icon: 'fab fa-linkedin', url: 'https://linkedin.com', label: 'LinkedIn' },
+    { icon: 'fab fa-whatsapp text-white', url: 'https://wa.me/5511982928508', label: 'WhatsApp' },
     { icon: 'fab fa-twitter', url: 'https://twitter.com', label: 'Twitter' },
     { icon: 'fab fa-youtube', url: 'https://youtube.com', label: 'YouTube' },
   ];
