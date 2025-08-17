@@ -7,6 +7,7 @@ node_modules/
 dist/
 dist-ssr/
 *.local
+client/dist/
 
 # Environment variables
 .env
@@ -30,7 +31,224 @@ logs
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+pnpm-debug.log*
 
 # Local development
 .serverless/
 .serverless*/
+
+# Docker
+.docker/
+
+# Cache
+.cache/
+.temp/
+
+# Sistema operacional
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Arquivos de lock
+yarn.lock
+package-lock.json
+pnpm-lock.yaml
+
+# Arquivos de configuração local
+*.local.*
+
+# Arquivos de teste
+coverage/
+.nyc_output/
+
+# Arquivos de produção
+build/
+
+# Arquivos temporários
+.tmp/
+.temp/
+
+# Arquivos de configuração do IDE
+.idea/
+*.sublime-workspace
+*.sublime-project
+
+# Arquivos do Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Arquivos do macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Arquivos de log do sistema
+*.log
+
+# Arquivos de ambiente local
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Arquivos de debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Pastas de dependências
+jspm_packages/
+
+# Pastas de documentação
+docs/
+
+# Pastas de testes
+__tests__/
+__mocks__/
+
+# Arquivos de configuração do editor
+.vscode/*
+!.vscode/extensions.json
+.idea/
+
+# Arquivos de configuração do Windows
+Thumbs.db
+
+# Arquivos de configuração do macOS
+.DS_Store
+
+# Arquivos de configuração do Vim
+*~
+*.swp
+*.swo
+
+# Arquivos de configuração do Visual Studio Code
+.vscode/*
+!.vscode/extensions.json
+
+# Arquivos de configuração do JetBrains
+.idea/
+*.iml
+
+# Arquivos de configuração do npm
+.npm
+.npmrc
+
+# Arquivos de configuração do Yarn
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
+
+# Arquivos de configuração do pnpm
+.pnpm-store/
+
+# Arquivos de configuração do Turbo
+.turbo/
+
+# Arquivos de configuração do Next.js
+.next/
+out/
+
+# Arquivos de configuração do Nuxt.js
+.nuxt/
+.nuxt-build/
+.nuxt-dev/
+.nuxt-prod/
+.nuxt-ts/
+.nuxt-types/
+
+# Arquivos de configuração do Gatsby
+.cache/
+public
+
+# Arquivos de configuração do Angular
+.angular/
+
+# Arquivos de configuração do Vue
+.vuepress/dist/
+
+# Arquivos de configuração do Svelte
+.svelte-kit/
+
+# Arquivos de configuração do Astro
+.astro/
+
+# Arquivos de configuração do Eleventy
+_site/
+
+# Arquivos de configuração do 11ty
+_site/
+
+# Arquivos de configuração do Docusaurus
+.build/
+
+# Arquivos de configuração do Docusaurus v2
+.docusaurus/
+
+# Arquivos de configuração do Sapper
+__sapper__/
+
+# Arquivos de configuração do SvelteKit
+.svelte-kit/
+
+# Arquivos de configuração do Vite
+.vite/
+
+# Arquivos de configuração do Vitest
+coverage/
+
+# Arquivos de configuração do Jest
+coverage/
+
+# Arquivos de configuração do Cypress
+cypress/videos/
+cypress/screenshots/
+
+# Arquivos de configuração do Playwright
+playwright-report/
+playwright/.cache/
+test-results/
+
+# Arquivos de configuração do Storybook
+storybook-static/
+
+# Arquivos de configuração do Chromatic
+.chromatic/
+
+# Arquivos de configuração do Lerna
+lerna-debug.log*
+
+# Arquivos de configuração do Yarn 2+
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
+
+# Arquivos de configuração do pnpm
+node_modules/
+.pnpm-store/
+
+# Arquivos de configuração do Turbo
+.turbo/
+
+# Arquivos de configuração do Tauri
+src-tauri/target/
+
+# Arquivos de configuração do Electron
+app/dist/
+app/node_modules/
+
+# Arquivos de configuração do Expo
+.expo/
+web-build/
+
+# Arquivos de configuração do Metro
+.metro-health-check*

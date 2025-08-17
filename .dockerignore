@@ -1,0 +1,29 @@
+# Dependências
+node_modules
+npm-debug.log
+
+# Build
+/dist
+/client/dist
+
+# Variáveis de ambiente
+.env
+.env.*
+!.env.example
+
+# Git
+.git
+.gitignore
+
+# IDE
+.vscode
+.idea
+
+# Outros
+.DS_Store
+*.pem
+
+# Logs
+logs
+*.log
+npm-debug.log*

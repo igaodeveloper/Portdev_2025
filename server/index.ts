@@ -1,10 +1,26 @@
 import express, { type Request, Response, NextFunction } from "express";
 import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
+import config from "./config";
+import cors from 'cors';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
 const app = express();
+
+// Configurações básicas do Express
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+
+// Configuração do CORS
+app.use(cors({
+  origin: config.cors.allowedOrigins,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true
+}));
+
+// Middleware para log de requisições
 
 app.use((req, res, next) => {
   const start = Date.now();
@@ -47,25 +63,27 @@ app.use((req, res, next) => {
     throw err;
   });
 
-  // importantly only setup vite in development and after
-  // setting up all the other routes so the catch-all route
-  // doesn't interfere with the other routes
-  if (app.get("env") === "development") {
+  // Configura o Vite em desenvolvimento e arquivos estáticos em produção
+  if (config.isDevelopment) {
     await setupVite(app, server);
   } else {
-    serveStatic(app);
+    // Servir arquivos estáticos em produção
+    app.use(serveStatic);
+    
+    // Rota de fallback para SPA (Single Page Application)
+    app.get('*', (req, res) => {
+      res.sendFile(path.join(__dirname, '../dist/public/index.html'));
+    });
   }
 
-  // ALWAYS serve the app on the port specified in the environment variable PORT
-  // Other ports are firewalled. Default to 5000 if not specified.
-  // this serves both the API and the client.
-  // It is the only port that is not firewalled.
-  const port = parseInt(process.env.PORT || '5000', 10);
+  // Inicia o servidor
+  const port = Number(config.port);
   server.listen({
     port,
-    host: "0.0.0.0",
+    host: '0.0.0.0',
     reusePort: true,
   }, () => {
-    log(`serving on port ${port}`);
+    log(`Server is running in ${config.env} mode on port ${port}`);
+    log(`API available at http://localhost:${port}${config.api.prefix}`);
   });
 })();
