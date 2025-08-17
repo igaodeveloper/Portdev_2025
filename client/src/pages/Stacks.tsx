@@ -11,6 +11,8 @@ const stackCategories = [
     stacks: [
       { name: 'React.js', level: 95, icon: '⚛️' },
       { name: 'Next.js', level: 90, icon: '🔄' },
+      { name: 'Vue.js', level: 85, icon: '🟢' },
+      { name: 'Angular', level: 80, icon: '🅰️' },
       { name: 'TypeScript', level: 90, icon: '📘' },
       { name: 'JavaScript (ES6+)', level: 95, icon: '📜' },
       { name: 'HTML5 & CSS3', level: 98, icon: '🎨' },
@@ -42,13 +44,9 @@ const stackCategories = [
     description: 'Sistemas de armazenamento e gerenciamento de dados',
     stacks: [
       { name: 'PostgreSQL', level: 90, icon: '🐘' },
-      { name: 'MongoDB', level: 85, icon: '🍃' },
       { name: 'MySQL', level: 80, icon: '🐬' },
-      { name: 'Redis', level: 75, icon: '🔴' },
       { name: 'Firebase', level: 80, icon: '🔥' },
-      { name: 'Prisma', level: 85, icon: '✨' },
-      { name: 'Drizzle ORM', level: 88, icon: '🌧️' },
-      { name: 'TypeORM', level: 80, icon: '🔷' },
+      { name: 'Prisma', level: 85, icon: '✨' }
     ]
   },
   {
@@ -75,8 +73,7 @@ const stackCategories = [
     stacks: [
       { name: 'React Native', level: 85, icon: '⚛️' },
       { name: 'Expo', level: 80, icon: '🎪' },
-      { name: 'Flutter', level: 70, icon: '🦋' },
-      { name: 'Ionic', level: 65, icon: '⚡' },
+      { name: 'Ionic', level: 65, icon: '⚡' }
     ]
   },
   {

@@ -45,7 +45,7 @@ export const ProjectCard = ({ project, onOpenModal }: ProjectCardProps) => {
         ))}
       </div>
       
-      <div className="flex justify-between items-center">
+      <div className="flex justify-center">
         {project.githubUrl && (
           <button 
             className="text-cosmic-blue hover:text-cosmic-purple transition-colors duration-300"
@@ -56,18 +56,6 @@ export const ProjectCard = ({ project, onOpenModal }: ProjectCardProps) => {
             data-testid={`link-github-${project.id}`}
           >
             <i className="fab fa-github mr-2"></i>Code
-          </button>
-        )}
-        {project.liveUrl && (
-          <button 
-            className="text-cosmic-blue hover:text-cosmic-purple transition-colors duration-300"
-            onClick={(e) => {
-              e.stopPropagation();
-              window.open(project.liveUrl, '_blank');
-            }}
-            data-testid={`link-demo-${project.id}`}
-          >
-            <i className="fas fa-external-link-alt mr-2"></i>Live Demo
           </button>
         )}
       </div>
