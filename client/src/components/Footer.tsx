@@ -17,8 +17,8 @@ export const Footer = () => {
       <div className="container mx-auto px-6">
         <div className="flex flex-col md:flex-row justify-between items-center">
           <div className="text-2xl font-bold text-glow mb-4 md:mb-0">
-            <span className="text-cosmic-purple">Cosmic</span>
-            <span className="text-cosmic-blue">Dev</span>
+            <span className="text-cosmic-purple">Igão</span>
+            <span className="text-cosmic-blue">.tsx</span>
           </div>
           
           <div className="flex space-x-6">
@@ -39,7 +39,7 @@ export const Footer = () => {
           </div>
           
           <div className="text-cosmic-gray text-sm mt-4 md:mt-0">
-            © 2024 CosmicDev. All rights reserved.
+            © 2024 Igão.tsx. All rights reserved.
           </div>
         </div>
       </div>
