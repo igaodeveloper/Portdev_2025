@@ -17,6 +17,7 @@ import { Projects } from "./pages/Projects";
 import { Videos } from "./pages/Videos";
 import { IDEPage } from "./pages/IDEPage";
 import { Contact } from "./pages/Contact";
+import { Stacks } from "./pages/Stacks";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -28,6 +29,7 @@ function Router() {
       <Route path="/videos" component={Videos} />
       <Route path="/ide" component={IDEPage} />
       <Route path="/contact" component={Contact} />
+      <Route path="/stacks" component={Stacks} />
       <Route component={NotFound} />
     </Switch>
   );
