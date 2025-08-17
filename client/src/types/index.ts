@@ -12,33 +12,106 @@ export interface Project {
 
 export interface Video {
   id: string;
+  channelId: string;
+  channelTitle: string;
   title: string;
   description: string;
   thumbnail: string;
   duration: string;
   views: string;
+  likes: string;
+  comments: string;
   publishedAt: string;
+  channelThumbnail: string;
   url?: string;
 }
 
+export interface YouTubeThumbnails {
+  default: {
+    url: string;
+    width: number;
+    height: number;
+  };
+  medium: {
+    url: string;
+    width: number;
+    height: number;
+  };
+  high: {
+    url: string;
+    width: number;
+    height: number;
+  };
+  standard?: {
+    url: string;
+    width: number;
+    height: number;
+  };
+  maxres?: {
+    url: string;
+    width: number;
+    height: number;
+  };
+}
+
 export interface YouTubeSearchResult {
+  kind: string;
+  etag: string;
+  nextPageToken?: string;
+  prevPageToken?: string;
+  regionCode: string;
+  pageInfo: {
+    totalResults: number;
+    resultsPerPage: number;
+  };
   items: {
-    id: { videoId: string };
+    kind: string;
+    etag: string;
+    id: {
+      kind: string;
+      videoId: string;
+    };
     snippet: {
+      publishedAt: string;
+      channelId: string;
       title: string;
       description: string;
-      thumbnails: {
-        high: { url: string };
-      };
-      publishedAt: string;
-    };
-    statistics?: {
-      viewCount: string;
-    };
-    contentDetails?: {
-      duration: string;
+      thumbnails: YouTubeThumbnails;
+      channelTitle: string;
+      liveBroadcastContent: string;
+      publishTime: string;
     };
   }[];
+}
+
+export interface YouTubeVideoDetails {
+  kind: string;
+  etag: string;
+  items: {
+    kind: string;
+    etag: string;
+    id: string;
+    statistics: {
+      viewCount: string;
+      likeCount: string;
+      dislikeCount: string;
+      favoriteCount: string;
+      commentCount: string;
+    };
+    contentDetails: {
+      duration: string;
+      dimension: string;
+      definition: string;
+      caption: string;
+      licensedContent: boolean;
+      contentRating: Record<string, unknown>;
+      projection: string;
+    };
+  }[];
+  pageInfo: {
+    totalResults: number;
+    resultsPerPage: number;
+  };
 }
 
 export interface ContactFormData {
