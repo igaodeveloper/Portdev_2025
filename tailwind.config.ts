@@ -44,6 +44,24 @@ export default {
         border: "var(--border)",
         input: "var(--input)",
         ring: "var(--ring)",
+        
+        // Cosmic Colors
+        cosmic: {
+          black: "var(--cosmic-black)",
+          darker: "var(--cosmic-darker)",
+          dark: "var(--cosmic-dark)",
+          purple: "var(--cosmic-purple)",
+          purpleVivid: "var(--cosmic-purple-vivid)",
+          pink: "var(--cosmic-pink)",
+          blue: "var(--cosmic-blue)",
+          cyan: "var(--cosmic-cyan)",
+          yellow: "var(--cosmic-yellow)",
+          green: "var(--cosmic-green)",
+          gray: "var(--cosmic-gray)",
+          white: "var(--cosmic-white)",
+          card: "var(--cosmic-card)",
+        },
+        
         chart: {
           "1": "var(--chart-1)",
           "2": "var(--chart-2)",

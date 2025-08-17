@@ -26,11 +26,18 @@
   
   /* Cosmic Color Palette */
   --cosmic-black: hsl(0, 0%, 0%);
+  --cosmic-darker: hsl(0, 0%, 10%);
+  --cosmic-dark: hsl(0, 0%, 15%);
   --cosmic-purple: hsl(250, 100%, 65%);
   --cosmic-purple-vivid: hsl(271, 100%, 59%);
+  --cosmic-pink: hsl(320, 100%, 65%);
   --cosmic-blue: hsl(201, 100%, 61%);
+  --cosmic-cyan: hsl(180, 100%, 50%);
+  --cosmic-yellow: hsl(50, 100%, 50%);
+  --cosmic-green: hsl(120, 100%, 50%);
   --cosmic-gray: hsl(0, 0%, 88%);
   --cosmic-white: hsl(0, 0%, 100%);
+  --cosmic-card: rgba(30, 30, 40, 0.7);
   
   --font-sans: 'Inter', sans-serif;
   --font-serif: Georgia, serif;

@@ -1,8 +1,8 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { floatAnimation } from '../utils/animations';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { useLocation as useWouterLocation } from 'wouter';
-import { FiX, FiMessageSquare, FiClock, FiCheck, FiCheckCircle } from 'react-icons/fi';
+import { FiX, FiMessageSquare, FiClock, FiCheck, FiCheckCircle, FiInfo, FiCode, FiBriefcase, FiMail, FiGithub, FiLinkedin } from 'react-icons/fi';
 
 export const WhatsAppButton = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -55,22 +55,91 @@ export const WhatsAppButton = () => {
       setUnreadCount(parseInt(hasUnread));
     }
     
+    // Inicializar o contexto da conversa
+    const initialContext = {
+      lastTopics: [] as string[],
+      userInterests: [] as string[],
+      conversationStage: 'initial' as 'initial' | 'middle' | 'detailed'
+    };
+    
+    // @ts-ignore
+    window.chatContext = initialContext;
+    
     return () => {
       window.removeEventListener('resize', checkIfMobile);
     };
   }, []);
 
-  const handleContactOption = (option: 'whatsapp' | 'email') => {
+  const handleContactOption = (option: 'whatsapp' | 'email' | 'contact') => {
     if (option === 'whatsapp') {
       const phoneNumber = "5511982928508";
       const url = `https://wa.me/${phoneNumber}?text=Olá! Gostaria de mais informações sobre seus serviços.`;
       window.open(url, '_blank');
+    } else if (option === 'email') {
+      window.location.href = 'mailto:contato@seuportfolio.com?subject=Contato%20do%20Portfólio&body=Olá,%20gostaria%20de%20mais%20informações%20sobre%20seus%20serviços.';
     } else {
       // Navega para a página de contato e fecha o chat
       setLocation('/contact');
-      setIsOpen(false);
+      setTimeout(() => setIsOpen(false), 300); // Pequeno atraso para melhor UX
     }
     setShowContactOptions(false);
+  };
+  
+  const handleQuickAction = (action: string) => {
+    let response = '';
+    let shouldRedirect = false;
+    let redirectPath = '';
+    
+    switch (action) {
+      case 'services':
+        shouldRedirect = true;
+        redirectPath = '/services';
+        response = 'Redirecionando para a página de serviços...';
+        break;
+        
+      case 'technologies':
+        shouldRedirect = true;
+        redirectPath = '/stacks';
+        response = 'Redirecionando para a página de tecnologias...';
+        break;
+        
+      case 'projects':
+        shouldRedirect = true;
+        redirectPath = '/projects';
+        response = 'Redirecionando para a página de projetos...';
+        break;
+        
+      default:
+        response = 'Como posso te ajudar hoje?';
+    }
+    
+    // Adiciona a mensagem de resposta
+    setMessages(prev => [
+      ...prev,
+      {
+        id: Date.now(),
+        text: response,
+        sender: 'bot',
+        timestamp: new Date(),
+        status: 'read',
+        showButtons: true
+      }
+    ]);
+    
+    // Se precisar redirecionar, faz isso após um pequeno atraso para o usuário ler a mensagem
+    if (shouldRedirect) {
+      setTimeout(() => {
+        setLocation(redirectPath);
+        setIsOpen(false); // Fecha o chat após o redirecionamento
+      }, 800);
+    }
+    
+    // Rolar para baixo após adicionar a mensagem
+    setTimeout(() => {
+      if (chatEndRef.current) {
+        chatEndRef.current.scrollIntoView({ behavior: 'smooth' });
+      }
+    }, 100);
   };
 
   const handleWhatsAppClick = () => {
@@ -97,16 +166,110 @@ export const WhatsAppButton = () => {
     }
   };
 
-  const handleSendMessage = () => {
+  // Função para analisar a intenção da mensagem
+  const analyzeMessage = useCallback((text: string) => {
+    const lowerText = text.toLowerCase();
+    
+    // @ts-ignore
+    const context = window.chatContext || {};
+    
+    // Análise de intenção básica
+    if (/(oi|olá|ola|eae|bom dia|boa tarde|boa noite)/i.test(lowerText)) {
+      return {
+        type: 'greeting',
+        response: `Olá! ${['Bom dia', 'Boa tarde', 'Boa noite'][new Date().getHours() % 3]}. Como posso te ajudar hoje?`,
+        contextUpdate: { conversationStage: 'initial' }
+      };
+    }
+    
+    if (/(obrigad[oa]|valeu|agradeço)/i.test(lowerText)) {
+      return {
+        type: 'thanks',
+        response: 'De nada! Estou aqui para ajudar. Se precisar de mais alguma coisa, é só chamar! 😊',
+        contextUpdate: { conversationStage: 'middle' }
+      };
+    }
+    
+    if (/(servi[çc]os|o que você faz|o que faz|desenvolvimento|site|aplicativo|aplicação)/i.test(lowerText)) {
+      return {
+        type: 'services',
+        response: 'Ofereço diversos serviços de desenvolvimento, incluindo:\n\n' +
+                 '• Desenvolvimento Web (React, Next.js, Node.js)\n' +
+                 '• Aplicativos Mobile (React Native, Flutter)\n' +
+                 '• Sistemas Personalizados\n' +
+                 '• Consultoria em Tecnologia\n\n' +
+                 'Posso te ajudar com algum projeto específico?',
+        contextUpdate: { 
+          lastTopics: [...(context.lastTopics || []), 'serviços'],
+          conversationStage: 'middle'
+        }
+      };
+    }
+    
+    if (/(tecnologias|tecnologia|ferramentas|linguagens|stack)/i.test(lowerText)) {
+      return {
+        type: 'technologies',
+        response: 'Trabalho com diversas tecnologias modernas, incluindo:\n\n' +
+                 '• Frontend: React, Next.js, TypeScript, TailwindCSS\n' +
+                 '• Backend: Node.js, Python, Java, .NET\n' +
+                 '• Mobile: React Native, Flutter\n' +
+                 '• Banco de Dados: PostgreSQL, MongoDB, Firebase\n\n' +
+                 'Gostaria de saber mais sobre alguma tecnologia específica?',
+        contextUpdate: {
+          lastTopics: [...(context.lastTopics || []), 'tecnologias'],
+          conversationStage: 'middle'
+        }
+      };
+    }
+    
+    if (/(contato|falar|conversar|e-?mail|telefone|whatsapp)/i.test(lowerText)) {
+      return {
+        type: 'contact',
+        response: 'Claro! Aqui estão minhas informações de contato:\n\n' +
+                 '• E-mail: contato@seuportfolio.com\n' +
+                 '• WhatsApp: (11) 98292-8508\n' +
+                 '• LinkedIn: linkedin.com/in/seuperfil\n\n' +
+                 'Prefere que eu te ajude com algo específico agora?',
+        contextUpdate: {
+          lastTopics: [...(context.lastTopics || []), 'contato'],
+          conversationStage: 'middle'
+        }
+      };
+    }
+    
+    if (/(projetos|portfólio|portifolio|trabalhos)/i.test(lowerText)) {
+      return {
+        type: 'projects',
+        response: 'Já trabalhei em diversos projetos interessantes! Aqui estão alguns destaques:\n\n' +
+                 '• Sistema de Gestão Empresarial\n' +
+                 '• Aplicativo de Delivery\n' +
+                 '• Plataforma de Cursos Online\n\n' +
+                 'Gostaria de ver mais detalhes sobre algum projeto específico?',
+        contextUpdate: {
+          lastTopics: [...(context.lastTopics || []), 'projetos'],
+          conversationStage: 'middle'
+        }
+      };
+    }
+    
+    // Resposta padrão se não reconhecer a intenção
+    return {
+      type: 'unknown',
+      response: 'Desculpe, não entendi completamente. Poderia reformular? Estou aqui para ajudar com informações sobre meus serviços, tecnologias que utilizo, meus projetos ou formas de contato.',
+      contextUpdate: {}
+    };
+  }, []);
+
+  const handleSendMessage = async () => {
     if (!message.trim()) return;
     
     // Adicionar mensagem do usuário
     const userMessage = {
       id: Date.now(),
       text: message,
-      sender: 'user',
+      sender: 'user' as const,
       timestamp: new Date(),
-      status: 'sent',
+      status: 'sent' as const,
       showButtons: false
     };
     
@@ -116,32 +279,62 @@ export const WhatsAppButton = () => {
     // Simular digitação
     setIsTyping(true);
     
-    // Simular resposta após 1-3 segundos
-    setTimeout(() => {
+    try {
+      // Analisar a mensagem para entender a intenção
+      const analysis = analyzeMessage(message);
+      
+      // Atualizar o contexto da conversa
+      // @ts-ignore
+      window.chatContext = {
+        // @ts-ignore
+        ...(window.chatContext || {}),
+        ...analysis.contextUpdate,
+        lastInteraction: new Date().toISOString()
+      };
+      
+      // Simular tempo de processamento baseado no tamanho da resposta
+      const processingTime = Math.min(1000 + Math.random() * 1000, 2000);
+      
+      setTimeout(() => {
+        setIsTyping(false);
+        
+        // Adicionar a resposta do bot
+        setMessages(prev => [
+          ...prev,
+          {
+            id: Date.now() + 1,
+            text: analysis.response,
+            sender: 'bot' as const,
+            timestamp: new Date(),
+            status: 'read' as const,
+            showButtons: true
+          }
+        ]);
+        
+        // Mostrar opções de contato se relevante
+        if (analysis.type === 'services' || analysis.type === 'projects') {
+          setShowContactOptions(true);
+        }
+        
+      }, processingTime);
+      
+    } catch (error) {
+      console.error('Erro ao processar mensagem:', error);
       setIsTyping(false);
       
-      const responses = [
-        "Entendi sua solicitação! Posso te ajudar com mais detalhes sobre meus serviços de desenvolvimento.",
-        "Ótima pergunta! Posso te enviar um orçamento ou agendar uma reunião para discutirmos melhor.",
-        "Obrigado pelo seu interesse! Posso te mostrar exemplos de trabalhos anteriores relacionados ao que você precisa.",
-        "Para orçamentos ou propostas, posso te encaminhar para meu e-mail profissional: contato@seuportfolio.com"
-      ];
-      
-      const randomResponse = responses[Math.floor(Math.random() * responses.length)];
-      
-      setMessages(prev => [...prev, {
-        id: Date.now() + 1,
-        text: randomResponse,
-        sender: 'bot',
-        timestamp: new Date(),
-        status: 'read',
-        showButtons: true
-      }]);
-      
-      // Mostrar opções de contato após a resposta
-      setShowContactOptions(true);
-      
-    }, 1000 + Math.random() * 2000);
+      // Resposta de erro amigável
+      setMessages(prev => [
+        ...prev,
+        {
+          id: Date.now() + 1,
+          text: 'Parece que tive um problema ao processar sua mensagem. Poderia tentar novamente?',
+          sender: 'bot' as const,
+          timestamp: new Date(),
+          status: 'read' as const,
+          showButtons: true
+        }
+      ]);
+    }
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
@@ -206,14 +399,18 @@ export const WhatsAppButton = () => {
                 <FiX size={20} />
               </button>
             </div>
-            
-            <div className="p-4 bg-gray-50 h-64 overflow-y-auto">
+                        <div className="p-4 bg-gray-50 h-64 overflow-y-auto">
               <div className="space-y-3">
                 {messages.map((msg) => (
                   <div 
                     key={msg.id} 
                     className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}
                   >
+                    {msg.sender === 'bot' && (
+                      <div className="flex-shrink-0 h-8 w-8 rounded-full bg-green-100 flex items-center justify-center mr-2 self-end mb-1">
+                        <FiMessageSquare className="text-green-600" size={16} />
+                      </div>
+                    )}
                     <div 
                       className={`p-3 rounded-2xl max-w-[80%] ${
                         msg.sender === 'user' 
@@ -221,18 +418,29 @@ export const WhatsAppButton = () => {
                           : 'bg-white rounded-tl-none shadow'
                       }`}
                     >
-                      <p className="text-sm whitespace-pre-line text-black">{msg.text}</p>
+                      <p className="text-sm whitespace-pre-line text-black">
+                        {msg.text.split('\n').map((line, i, arr) => (
+                          <span key={i}>
+                            {line}
+                            {i < arr.length - 1 && <br />}
+                          </span>
+                        ))}
+                      </p>
                       <div className="flex items-center justify-end mt-1 space-x-1">
                         <span className="text-xs text-gray-500">
                           {msg.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                         </span>
-                        {msg.sender === 'user' && (
+                        {msg.sender === 'user' ? (
                           <span className="text-xs">
                             {msg.status === 'sent' ? (
                               <FiCheck className="text-gray-400" />
                             ) : (
                               <FiCheckCircle className="text-blue-500" />
                             )}
+                          </span>
+                        ) : (
+                          <span className="text-xs text-green-500">
+                            <FiCheckCircle />
                           </span>
                         )}
                       </div>
@@ -249,25 +457,61 @@ export const WhatsAppButton = () => {
                 )}
 
                 {showContactOptions && (
-                  <div className="flex flex-col space-y-2 mt-4">
-                    <p className="text-xs text-center text-gray-500">Ou entre em contato diretamente:</p>
-                    <div className="flex justify-center space-x-3">
+                  <div className="flex flex-col space-y-3 mt-4 p-3 bg-blue-50 rounded-lg">
+                    <p className="text-xs text-center font-medium text-blue-700">Como posso te ajudar agora?</p>
+                    <div className="grid grid-cols-2 gap-2">
+                      <button
+                        onClick={() => handleQuickAction('services')}
+                        className="flex flex-col items-center p-2 bg-white rounded-lg shadow-sm hover:bg-blue-50 transition-colors border border-blue-100"
+                      >
+                        <div className="bg-blue-100 p-2 rounded-full mb-1">
+                          <FiBriefcase className="text-blue-600" size={16} />
+                        </div>
+                        <span className="text-xs text-center text-gray-700">Serviços</span>
+                      </button>
+                      <button
+                        onClick={() => handleQuickAction('technologies')}
+                        className="flex flex-col items-center p-2 bg-white rounded-lg shadow-sm hover:bg-blue-50 transition-colors border border-blue-100"
+                      >
+                        <div className="bg-blue-100 p-2 rounded-full mb-1">
+                          <FiCode className="text-blue-600" size={16} />
+                        </div>
+                        <span className="text-xs text-center text-gray-700">Tecnologias</span>
+                      </button>
+                      <button
+                        onClick={() => handleQuickAction('projects')}
+                        className="flex flex-col items-center p-2 bg-white rounded-lg shadow-sm hover:bg-blue-50 transition-colors border border-blue-100"
+                      >
+                        <div className="bg-blue-100 p-2 rounded-full mb-1">
+                          <FiGithub className="text-blue-600" size={16} />
+                        </div>
+                        <span className="text-xs text-center text-gray-700">Projetos</span>
+                      </button>
+                      <button
+                        onClick={() => handleContactOption('contact')}
+                        className="flex flex-col items-center p-2 bg-white rounded-lg shadow-sm hover:bg-blue-50 transition-colors border border-blue-100"
+                      >
+                        <div className="bg-blue-100 p-2 rounded-full mb-1">
+                          <FiMail className="text-blue-600" size={16} />
+                        </div>
+                        <span className="text-xs text-center text-gray-700">Contato</span>
+                      </button>
+                    </div>
+                    <div className="flex justify-center space-x-3 pt-2 border-t border-blue-100">
                       <button
                         onClick={() => handleContactOption('whatsapp')}
-                        className="flex items-center space-x-2 bg-[#25D366] hover:bg-[#128C7E] text-white px-4 py-2 rounded-full text-sm font-medium transition-colors"
+                        className="flex items-center space-x-1 bg-[#25D366] hover:bg-[#128C7E] text-white px-3 py-1.5 rounded-full text-xs font-medium transition-colors"
                       >
-                        <svg width="16" height="16" viewBox="0 0 32 32" fill="currentColor" className="text-white">
+                        <svg width="14" height="14" viewBox="0 0 32 32" fill="currentColor">
                           <path d="M16 0C7.163 0 0 7.163 0 16C0 19.16 0.95 22.103 2.6 24.6L0.9 32L8.55 30.3C10.9 31.8 13.85 32.7 16.9 32.7C24.737 32.7 31 25.837 31 18C31 8.063 24.737 0 16 0ZM24.8 23.1C24.8 23.1 23.25 25.3 22.4 25.3C21.55 25.3 17.4 23.1 16.9 22.7C16.05 22.3 13.2 21.5 12.4 19.7C11.6 17.9 12.4 16.5 12.8 15.6C13.2 14.7 14.5 14.3 14.85 14.3C15.2 14.3 15.55 14.3 15.75 14.3C16.1 14.3 16.6 14.3 16.9 15.6C17.2 16.9 18.5 20.8 18.8 21.1C19.1 21.4 19.4 21.4 19.7 21.1C20 20.8 20.6 20.1 21.1 19.5C21.6 18.9 22.1 18.7 22.4 18.7C22.7 18.7 23.15 18.8 23.5 19.2C23.85 19.6 24.8 21.1 24.8 23.1Z" fill="currentColor"/>
                         </svg>
                         <span>WhatsApp</span>
                       </button>
                       <button
                         onClick={() => handleContactOption('email')}
-                        className="flex items-center space-x-2 bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded-full text-sm font-medium transition-colors"
+                        className="flex items-center space-x-1 bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 rounded-full text-xs font-medium transition-colors"
                       >
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <path d="M20 4H4C2.9 4 2 4.9 2 6V18C2 19.1 2.9 20 4 20H20C21.1 20 22 19.1 22 18V6C22 4.9 21.1 4 20 4ZM20 8L12 13L4 8V6L12 11L20 6V8Z" fill="currentColor"/>
-                        </svg>
+                        <FiMail size={14} />
                         <span>E-mail</span>
                       </button>
                     </div>
