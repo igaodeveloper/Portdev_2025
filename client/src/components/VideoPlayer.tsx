@@ -1,5 +1,24 @@
-import { FiX } from 'react-icons/fi';
+import React from 'react';
+import { FiX, FiClock, FiEye, FiThumbsUp, FiMessageSquare, FiCalendar, FiUser } from 'react-icons/fi';
 import { Video } from '../types';
+import { formatDistanceToNow, parseISO, isValid } from 'date-fns';
+import { ptBR } from 'date-fns/locale';
+
+// Helper function to safely format dates
+const formatDate = (dateString: string) => {
+  try {
+    const date = parseISO(dateString);
+    if (!isValid(date)) return 'Data indisponível';
+    
+    return formatDistanceToNow(date, { 
+      addSuffix: true,
+      locale: ptBR
+    });
+  } catch (error) {
+    console.error('Error formatting date:', error);
+    return 'Data inválida';
+  }
+};
 
 interface VideoPlayerProps {
   video: Video | null;
@@ -23,16 +42,21 @@ export const VideoPlayer = ({
   const videoUrl = `https://www.youtube.com/embed/${video.id}?autoplay=1&modestbranding=1&rel=0&showinfo=0`;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-90">
-      <div className="relative w-full h-full max-w-6xl mx-4 my-8">
-        {/* Close button */}
-        <button
-          onClick={onClose}
-          className="absolute top-4 right-4 z-10 p-2 text-white bg-black bg-opacity-50 rounded-full hover:bg-opacity-75 transition-all"
-          aria-label="Fechar player de vídeo"
-        >
-          <FiX size={24} />
-        </button>
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-90 p-4">
+      <div className="relative w-full max-w-6xl h-[90vh] flex flex-col">
+        <div className="flex-shrink-0">
+          {/* Close button */}
+          <button
+            onClick={onClose}
+            className="absolute top-0 right-0 z-10 p-2 text-white bg-black bg-opacity-50 rounded-full hover:bg-opacity-75 transition-all -mt-2 -mr-2"
+            aria-label="Fechar player de vídeo"
+          >
+            <FiX size={24} />
+          </button>
+        </div>
+        
+        {/* Scrollable content */}
+        <div className="flex-1 overflow-y-auto pr-2 custom-scrollbar">
 
         {/* Video container */}
         <div className="relative w-full h-0 pb-[56.25%] bg-black">
@@ -47,9 +71,45 @@ export const VideoPlayer = ({
         </div>
 
         {/* Video info */}
-        <div className="mt-4 text-white">
-          <h2 className="text-xl font-bold">{video.title}</h2>
-          <p className="text-gray-300">{video.channelTitle}</p>
+        <div className="mt-4 p-4 bg-gray-900/50 rounded-lg text-white">
+          <h2 className="text-2xl font-bold mb-2">{video.title}</h2>
+          
+          <div className="flex items-center space-x-4 mb-4">
+            <div className="flex items-center text-gray-300">
+              <FiUser className="mr-1" />
+              <span>{video.channelTitle}</span>
+            </div>
+            <div className="flex items-center text-gray-300">
+                <FiCalendar className="mr-1" />
+                <span>{formatDate(video.publishedAt)}</span>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
+            <div className="flex items-center">
+              <FiEye className="mr-2 text-blue-400" />
+              <span>{video.views} visualizações</span>
+            </div>
+            <div className="flex items-center">
+              <FiThumbsUp className="mr-2 text-green-400" />
+              <span>{video.likes} curtidas</span>
+            </div>
+            <div className="flex items-center">
+              <FiMessageSquare className="mr-2 text-yellow-400" />
+              <span>{video.comments} comentários</span>
+            </div>
+            <div className="flex items-center">
+              <FiClock className="mr-2 text-purple-400" />
+              <span>Duração: {video.duration}</span>
+            </div>
+          </div>
+
+          {video.description && (
+            <div className="mt-4 p-3 bg-gray-800/50 rounded">
+              <h3 className="font-semibold mb-2">Descrição:</h3>
+              <p className="text-gray-300 text-sm whitespace-pre-line">{video.description}</p>
+            </div>
+          )}
         </div>
 
         {/* Navigation buttons */}
@@ -79,6 +139,7 @@ export const VideoPlayer = ({
             </button>
           </div>
         )}
+        </div>
       </div>
     </div>
   );
