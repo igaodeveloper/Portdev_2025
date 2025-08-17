@@ -91,6 +91,23 @@ export interface YouTubeVideoDetails {
     kind: string;
     etag: string;
     id: string;
+    snippet: {
+      publishedAt: string;
+      channelId: string;
+      title: string;
+      description: string;
+      thumbnails: YouTubeThumbnails;
+      channelTitle: string;
+      tags?: string[];
+      categoryId: string;
+      liveBroadcastContent: string;
+      defaultLanguage?: string;
+      localized: {
+        title: string;
+        description: string;
+      };
+      defaultAudioLanguage?: string;
+    };
     statistics: {
       viewCount: string;
       likeCount: string;
