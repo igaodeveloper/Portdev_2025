@@ -6,6 +6,9 @@ import { Video } from '../types';
 import { useYouTubeSearch } from '../hooks/useYouTubeSearch';
 import { fadeInUp, staggerContainer } from '../utils/animations';
 
+// Log para depuração
+console.log('Variável de ambiente VITE_YOUTUBE_API_KEY:', import.meta.env.VITE_YOUTUBE_API_KEY);
+
 export const Videos = () => {
   const [selectedVideo, setSelectedVideo] = useState<Video | null>(null);
   const [isPlayerOpen, setIsPlayerOpen] = useState(false);

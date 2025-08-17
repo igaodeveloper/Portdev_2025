@@ -14,13 +14,19 @@ export const useYouTubeSearch = () => {
     setIsLoading(true);
     setError(null);
 
+    console.log('Chave da API:', YOUTUBE_API_KEY); // Log para depuração
+
     try {
-      const searchResponse = await fetch(
-        `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(query)}&type=video&maxResults=12&key=${YOUTUBE_API_KEY}`
-      );
+      const url = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(query)}&type=video&maxResults=12&key=${YOUTUBE_API_KEY}`;
+      console.log('URL da requisição:', url); // Log para depuração
+      
+      const searchResponse = await fetch(url);
+      console.log('Status da resposta:', searchResponse.status); // Log para depuração
 
       if (!searchResponse.ok) {
-        throw new Error('Failed to search videos');
+        const errorData = await searchResponse.json().catch(() => ({}));
+        console.error('Erro na resposta da API:', errorData); // Log para depuração
+        throw new Error(errorData.error?.message || 'Failed to search videos');
       }
 
       const searchData: YouTubeSearchResult = await searchResponse.json();
