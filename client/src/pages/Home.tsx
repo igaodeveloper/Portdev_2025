@@ -1,12 +1,19 @@
 import { motion } from 'framer-motion';
 import { Link } from 'wouter';
 import { fadeInUp, floatAnimation, glitchEffect } from '../utils/animations';
+import { ProfileLogo } from '../components/ProfileLogo';
 
 export const Home = () => {
   return (
     <section className="min-h-screen flex items-center justify-center pt-20">
       <div className="container mx-auto px-6 text-center">
-        <motion.div {...floatAnimation}>
+        <motion.div 
+          className="flex flex-col items-center justify-center mb-8"
+          {...floatAnimation}
+        >
+          <div className="mb-16">
+            <ProfileLogo size={320} />
+          </div>
           <motion.h1
             className="text-6xl md:text-8xl font-black mb-6 text-glow"
             {...fadeInUp}
