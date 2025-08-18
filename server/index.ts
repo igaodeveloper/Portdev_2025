@@ -92,23 +92,41 @@ app.get('/', (_req, res) => {
       console.log('Modo de produção ativado');
       
       // Servir arquivos estáticos do frontend
-      const publicPath = config.paths.public;
+      const publicPath = path.resolve(__dirname, '../../dist/public');
+      const indexPath = path.join(publicPath, 'index.html');
       
       // Verifica se o diretório de build existe
       if (!fs.existsSync(publicPath)) {
-        console.error(`Diretório de build não encontrado em: ${publicPath}`);
-        console.log('Certifique-se de que o frontend foi construído corretamente.');
+        console.error(`❌ Diretório de build não encontrado em: ${publicPath}`);
+        console.log('ℹ️  Certifique-se de que o frontend foi construído corretamente executando:');
+        console.log('   cd client && npm run build');
+        console.log('   ou');
+        console.log('   npm run build:client');
       } else {
-        console.log(`Servindo arquivos estáticos de: ${publicPath}`);
-        app.use(express.static(publicPath, { maxAge: '1y' }));
+        console.log(`📁 Servindo arquivos estáticos de: ${publicPath}`);
         
-        // Rota de fallback para SPA (Single Page Application)
-        app.get('*', (_req, res) => {
-          const indexPath = path.join(publicPath, 'index.html');
+        // Servir arquivos estáticos
+        app.use(express.static(publicPath, { 
+          maxAge: '1y',
+          index: false, // Desabilita o redirecionamento automático para index.html
+          redirect: false
+        }));
+        
+        // Rota para a raiz
+        app.get('/', (_req, res) => {
           if (fs.existsSync(indexPath)) {
             res.sendFile(indexPath);
           } else {
-            res.status(404).send('Arquivo não encontrado');
+            res.status(404).send('Arquivo index.html não encontrado');
+          }
+        });
+        
+        // Rota de fallback para SPA (Single Page Application)
+        app.get('*', (_req, res) => {
+          if (fs.existsSync(indexPath)) {
+            res.sendFile(indexPath);
+          } else {
+            res.status(404).send('Página não encontrada');
           }
         });
       }
