@@ -3,7 +3,7 @@
 # Script de build para o Render
 
 echo "Instalando dependências..."
-npm install
+npm ci --only=production
 
 echo "Construindo aplicação..."
 npm run build
